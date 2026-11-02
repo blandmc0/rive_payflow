@@ -66,8 +66,8 @@
 <script>
   // ===== НАСТРОЙКИ: поменяй под свой файл =====
   const RIV_FILE = "flow.riv";        // имя файла рядом с index.html
-  const ARTBOARD = App;         // например "Terminal"; undefined = артборд по умолчанию
-  const STATE_MACHINE = Main;    // например "Terminal SM"; undefined = автоплей анимации
+  const ARTBOARD = "App";         // например "Terminal"; undefined = артборд по умолчанию
+  const STATE_MACHINE = "Main";    // например "Terminal SM"; undefined = автоплей анимации
   // ============================================
 
   const canvas = document.getElementById("rive-canvas");
@@ -77,6 +77,7 @@
     src: RIV_FILE,
     canvas: canvas,
     autoplay: true,
+    autoBind: true,
     layout: new rive.Layout({ fit: rive.Fit.Contain, alignment: rive.Alignment.Center }),
     onLoad: () => { r.resizeDrawingSurfaceToCanvas(); },
     onLoadError: () => { err.style.display = "block"; },
