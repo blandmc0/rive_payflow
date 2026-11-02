@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rive: платёжный терминал — кейс</title>
+<meta name="description" content="Интерактивный флоу платёжного терминала в Rive: State Machine + Data Binding.">
+<style>
+  :root { --bg:#0f1115; --card:#181b22; --text:#e8eaf0; --muted:#9aa3b2; --accent:#6c8cff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 960px; margin: 0 auto; padding: 40px 20px 64px; }
+  h1 { font-size: 28px; margin: 0 0 8px; }
+  .sub { color: var(--muted); margin: 0 0 32px; }
+  .stage { background: var(--card); border-radius: 16px; padding: 16px; display:flex; justify-content:center; }
+  /* Размер сцены: подгони под артборд (соотношение сторон) */
+  .stage .box { width: 100%; max-width: 420px; aspect-ratio: 9 / 16; }
+  canvas { width: 100%; height: 100%; display:block; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 32px; }
+  .card { background: var(--card); border-radius: 12px; padding: 20px; }
+  .card h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin: 0 0 8px; }
+  .card p, .card ul { margin: 0; color: var(--text); }
+  .card ul { padding-left: 18px; }
+  footer { margin-top: 40px; color: var(--muted); font-size: 14px; }
+  footer a { color: var(--accent); text-decoration: none; }
+  .err { color:#ff8a8a; text-align:center; padding: 24px; display:none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Платёжный терминал в Rive</h1>
+  <p class="sub">Интерактивный флоу: ввод PIN, состояния, обратная связь. State Machine + Data Binding.</p>
+
+  <div class="stage">
+    <div class="box"><canvas id="rive-canvas"></canvas></div>
+  </div>
+  <div class="err" id="err">Не удалось загрузить анимацию. Открой страницу по https-ссылке, а не как файл.</div>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Задача</h2>
+      <p>TODO: 1–2 строки — что нужно было собрать и зачем.</p>
+    </section>
+    <section class="card">
+      <h2>Решение</h2>
+      <ul>
+        <li>TODO: структура State Machine</li>
+        <li>TODO: что вынесено в Data Binding</li>
+        <li>TODO: вес файла, оптимизация</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>Результат</h2>
+      <p>TODO: готовый .riv, который подключается разработчиком без «сборки на глаз».</p>
+    </section>
+  </div>
+
+  <footer>
+    Влад Блинов — Product Motion Designer / UI Animator ·
+    <a href="https://www.behance.net/gallery/255360637/Motion-showreel-2026-Game-UIUX-Lottie">Шоурил</a> ·
+    <a href="https://t.me/ladislav_ads">Telegram</a>
+  </footer>
+</main>
+
+<script src="https://unpkg.com/@rive-app/canvas@2"></script>
+<script>
+  // ===== НАСТРОЙКИ: поменяй под свой файл =====
+  const RIV_FILE = "case.riv";        // имя файла рядом с index.html
+  const ARTBOARD = undefined;         // например "Terminal"; undefined = артборд по умолчанию
+  const STATE_MACHINE = undefined;    // например "Terminal SM"; undefined = автоплей анимации
+  // ============================================
+
+  const canvas = document.getElementById("rive-canvas");
+  const err = document.getElementById("err");
+
+  const cfg = {
+    src: RIV_FILE,
+    canvas: canvas,
+    autoplay: true,
+    layout: new rive.Layout({ fit: rive.Fit.Contain, alignment: rive.Alignment.Center }),
+    onLoad: () => { r.resizeDrawingSurfaceToCanvas(); },
+    onLoadError: () => { err.style.display = "block"; },
+  };
+  if (ARTBOARD) cfg.artboard = ARTBOARD;
+  if (STATE_MACHINE) cfg.stateMachines = STATE_MACHINE;
+
+  const r = new rive.Rive(cfg);
+  window.addEventListener("resize", () => r.resizeDrawingSurfaceToCanvas());
+</script>
+</body>
+</html>
